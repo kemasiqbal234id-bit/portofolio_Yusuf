@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirza Iqbal Yusuf - Creative Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #feca57 75%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        /* Typing Animation */
+        .typing-text {
+            border-right: 3px solid #667eea;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: #667eea; }
+            51%, 100% { border-color: transparent; }
+        }
+        
+        /* Social Button Hover Effects */
+        .social-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .social-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .bento-item {
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Particles Background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Discord Status */
+        .discord-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-online { background: #43b581; }
+        .status-idle { background: #faa61a; }
+        .status-dnd { background: #f04747; }
+        .status-offline { background: #747f8d; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Spotify Widget */
+        .spotify-widget {
+            background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+            border-radius: 15px;
+            padding: 1rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gradient-text {
+                font-size: 2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- Main Container -->
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                Mirza Iqbal Yusuf
+            </h1>
+            
+            <h2 class="text-2xl md:text-4xl font-semibold gradient-text mb-6">
+                Berkarya dengan Hati, Menginspirasi melalui Aksi, Membangun Masa Depan dengan Inovasi.
+            </h2>
+            
+            <div class="text-xl md:text-2xl text-gray-300 h-8">
+                <span id="typing-text" class="typing-text"></span>
+            </div>
+        </div>
+        
+        <!-- Live Status Section -->
+        <div class="flex flex-wrap gap-4 mb-8 justify-center" data-aos="fade-up" data-aos-delay="200">
+            <!-- Discord Status -->
+            <div class="discord-status glass">
+                <i class="fab fa-discord text-2xl"></i>
+                <div>
+                    <div class="font-semibold">Discord</div>
+                    <div id="discord-status" class="text-sm opacity-80">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spotify Widget -->
+            <div class="spotify-widget glass">
+                <i class="fab fa-spotify text-2xl"></i>
+                <div>
+                    <div class="font-semibold">Spotify</div>
+                    <div id="spotify-status" class="text-sm opacity-80">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bento Grid - Contact & Links -->
+        <div class="bento-grid max-w-4xl w-full mb-8">
+            <!-- WhatsApp -->
+            <div class="bento-item glass" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                        <i class="fab fa-whatsapp text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">WhatsApp</h3>
+                        <p class="text-gray-300">+62 821-4735-4396</p>
+                    </div>
+                </div>
+                <button onclick="openWhatsApp()" class="social-btn w-full mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-all">
+                    <i class="fab fa-whatsapp mr-2"></i>Chat Sekarang
+                </button>
+            </div>
+            
+            <!-- Instagram -->
+            <div class="bento-item glass" data-aos="fade-up" data-aos-delay="400">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                        <i class="fab fa-instagram text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Instagram</h3>
+                        <p class="text-gray-300">@yusuf_id27</p>
+                    </div>
+                </div>
+                <button onclick="openInstagram()" class="social-btn w-full mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-2 px-4 rounded-lg transition-all">
+                    <i class="fab fa-instagram mr-2"></i>Follow
+                </button>
+            </div>
+            
+            <!-- Discord -->
+            <div class="bento-item glass" data-aos="fade-up" data-aos-delay="500">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                        <i class="fab fa-discord text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Discord</h3>
+                        <p class="text-gray-300">Mirza Iqbal#1234</p>
+                    </div>
+                </div>
+                <button onclick="openDiscord()" class="social-btn w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all">
+                    <i class="fab fa-discord mr-2"></i>Add Friend
+                </button>
+            </div>
+            
+            <!-- Music Player -->
+            <div class="bento-item glass" data-aos="fade-up" data-aos-delay="600">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-music text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Music Player</h3>
+                        <p class="text-gray-300">My Playlist</p>
+                    </div>
+                </div>
+                <button onclick="toggleMusicPlayer()" class="social-btn w-full mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-all">
+                    <i class="fas fa-play mr-2"></i>Play Music
+                </button>
+            </div>
+        </div>
+        
+        <!-- Music Player Modal -->
+        <div id="music-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="glass rounded-2xl p-6 max-w-md w-full mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">Music Player</h3>
+                    <button onclick="toggleMusicPlayer()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        // Typing Animation
+        const roles = ['Creative Developer', 'Music Enthusiast', 'Freelance Specialist'];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeText() {
+            const currentRole = roles[roleIndex];
+            const typingElement = document.getElementById('typing-text');
+            
+            if (isDeleting) {
+                typingElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                typingElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentRole.length) {
+                typingSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeText, typingSpeed);
+        }
+        
+        // Start typing animation
+        typeText();
+        
+        // Particles Background
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const particles = [];
+        const particleCount = 100;
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            
+            draw() {
+                ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            // Draw connections
+            particles.forEach((particle, index) => {
+                for (let j = index + 1; j < particles.length; j++) {
+                    const dx = particles[j].x - particle.x;
+                    const dy = particles[j].y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(102, 126, 234, ${0.1 * (1 - distance / 100)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        initParticles();
+        animateParticles();
+        
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Discord Status (Lanyard API)
+        async function updateDiscordStatus() {
+            const discordId = '1376504622549696606';
+            const statusElement = document.getElementById('discord-status');
+            
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const { discord_status, activities } = data.data;
+                    let statusText = '';
+                    let statusClass = '';
+                    
+                    switch (discord_status) {
+                        case 'online':
+                            statusText = 'Online';
+                            statusClass = 'status-online';
+                            break;
+                        case 'idle':
+                            statusText = 'Idle';
+                            statusClass = 'status-idle';
+                            break;
+                        case 'dnd':
+                            statusText = 'Do Not Disturb';
+                            statusClass = 'status-dnd';
+                            break;
+                        default:
+                            statusText = 'Offline';
+                            statusClass = 'status-offline';
+                    }
+                    
+                    statusElement.innerHTML = `
+                        <div class="status-indicator ${statusClass}"></div>
+                        <span>${statusText}</span>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching Discord status:', error);
+                statusElement.innerHTML = `
+                    <div class="status-indicator status-offline"></div>
+                    <span>Offline</span>
+                `;
+            }
+        }
+        
+        // Spotify Status (using Lanyard API)
+        async function updateSpotifyStatus() {
+            const discordId = '1376504622549696606';
+            const spotifyElement = document.getElementById('spotify-status');
+            
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
+                const data = await response.json();
+                
+                if (data.success && data.data.activities) {
+                    const spotifyActivity = data.data.activities.find(activity => activity.name === 'Spotify');
+                    
+                    if (spotifyActivity) {
+                        spotifyElement.innerHTML = `
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-music text-xs"></i>
+                                <span class="truncate">${spotifyActivity.details}</span>
+                            </div>
+                        `;
+                    } else {
+                        spotifyElement.innerHTML = `
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-pause text-xs"></i>
+                                <span>Offline / Chilling</span>
+                            </div>
+                        `;
+                    }
+                } else {
+                    spotifyElement.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-pause text-xs"></i>
+                            <span>Offline / Chilling</span>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching Spotify status:', error);
+                spotifyElement.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-pause text-xs"></i>
+                        <span>Offline / Chilling</span>
+                    </div>
+                `;
+            }
+        }
+        
+        // Update statuses
+        updateDiscordStatus();
+        updateSpotifyStatus();
+        
+        // Update statuses every 30 seconds
+        setInterval(() => {
+            updateDiscordStatus();
+            updateSpotifyStatus();
+        }, 30000);
+        
+        // Social Media Functions
+        function openWhatsApp() {
+            window.open('https://wa.me/6282147354396', '_blank');
+        }
+        
+        function openInstagram() {
+            window.open('https://instagram.com/yusuf_id27', '_blank');
+        }
+        
+        function openDiscord() {
+            window.open('https://discord.com/users/1376504622549696606', '_blank');
+        }
+        
+        function toggleMusicPlayer() {
+            const modal = document.getElementById('music-modal');
+            modal.classList.toggle('hidden');
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('music-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
